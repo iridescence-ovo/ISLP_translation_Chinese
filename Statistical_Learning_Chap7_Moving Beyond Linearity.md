@@ -1,4 +1,4 @@
-# 8 Moving Beyond Linearity
+# 7 Moving Beyond Linearity
 
 **原书：An Introduction to Statistical Learning_with Applications in Python (Springer Texts in Statistics)-Springer (2023)**
 
