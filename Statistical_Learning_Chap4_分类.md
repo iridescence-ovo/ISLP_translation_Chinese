@@ -8,6 +8,10 @@
 
 **翻译：GPT，校对：Iridescence-ovo**
 
+仅供学习交流使用。
+
+选读部分未翻译。
+
 --------
 
 第 3 章讨论的线性回归模型假设响应变量 $Y$ 是定量的。然而，在许多情况下，响应变量是 **定性(qualitative)** 的。例如，眼睛的颜色就是定性的。定性变量通常也被称为 **分类变量(categorical)** ，这两个术语可以互换使用。在本章中，我们研究用于预测定性响应的方法，这一过程称为 **分类（classification）**。对一个观测值进行定性响应的预测，可以被称为对该观测值的**分类**，因为这涉及将观测值分配到某个类别或类中。
@@ -241,16 +245,16 @@ $$
 事实证明，可以将二分类逻辑回归方法扩展到 $K > 2$ 类的情境。这种扩展有时称为 **多项式逻辑回归(Multinomial Logistic Regression)**。为此，我们首先选择一个类别作为**基准类别(baseline)**；在不失一般性的情况下，我们选择第 $K$ 类作为基准。然后，我们用以下模型替代模型 (4.7)：
 
 $$
-\Pr(Y = k | X = x) = \frac{e^{\beta_{k0} + \beta_{k1}x_1 + \cdots + \beta_{kp}x_p}}{1 + \sum_{l=1}^{K-1} e^{\beta_{l0} + \beta_{l1}x_1 + \cdots + \beta_{lp}x_p}} \quad (4.10)
+\Pr(Y = k | X = x) = \frac{e^{\beta_{k0} + \beta_{k1}x_1 + \cdots + \beta_{kp}x_p}}{1 + \sum_{l=1}^{K-1} e^{\beta_{l0} + \beta_{l1}x_1 + \cdots + \beta_{lp}x_p}} \tag{4.10}
 $$
 对 $k = 1, \ldots, K-1$ 成立，且
 $$
-\Pr(Y = K | X = x) = \frac{1}{1 + \sum_{l=1}^{K-1} e^{\beta_{l0} + \beta_{l1}x_1 + \cdots + \beta_{lp}x_p}}. \quad (4.11)
+\Pr(Y = K | X = x) = \frac{1}{1 + \sum_{l=1}^{K-1} e^{\beta_{l0} + \beta_{l1}x_1 + \cdots + \beta_{lp}x_p}}. \tag{4.11}
 $$
 
 可以证明，对于 $k = 1, \ldots, K-1$，有
 $$
-\log \left( \frac{\Pr(Y = k | X = x)}{\Pr(Y = K | X = x)} \right) = \beta_{k0} + \beta_{k1}x_1 + \cdots + \beta_{kp}x_p. \quad (4.12)
+\log \left( \frac{\Pr(Y = k | X = x)}{\Pr(Y = K | X = x)} \right) = \beta_{k0} + \beta_{k1}x_1 + \cdots + \beta_{kp}x_p. \tag{4.12}
 $$
 
 注意到 (4.12) 与 (4.6) 十分相似。方程 (4.12) 表明，任意两个类别之间的对数几率依然是特征的线性函数。
@@ -266,13 +270,13 @@ $$
 我们现在简要介绍多项式逻辑回归的一种替代编码方法，称为**softmax编码**。softmax编码在意义上等同于前面描述的编码，因为无论采用哪种编码，拟合值、任意两个类别之间的对数几率以及其他关键模型输出都将保持不变。然而，softmax编码在机器学习文献的某些领域被广泛使用（它将在第10章中再次出现），因此值得了解。在softmax编码中，我们不选择基准类别，而是对所有 $K$ 类进行对称处理，并假设对于 $k = 1, \dots, K$：
 
 $$
-\Pr(Y = k|X = x) = \frac{e^{\beta_{k0} + \beta_{k1}x_1 + \cdots + \beta_{kp}x_p}}{\sum_{l=1}^{K} e^{\beta_{l0} + \beta_{l1}x_1 + \cdots + \beta_{lp}x_p}}. \quad (4.13)
+\Pr(Y = k|X = x) = \frac{e^{\beta_{k0} + \beta_{k1}x_1 + \cdots + \beta_{kp}x_p}}{\sum_{l=1}^{K} e^{\beta_{l0} + \beta_{l1}x_1 + \cdots + \beta_{lp}x_p}}. \tag{4.13}
 $$
 
 因此，我们实际上估计所有 $K$ 个类别的系数，而不是只为 $K - 1$ 个类别估计系数。很容易看出，由于公式 (4.13)，类别 $k$ 和 $k'$ 之间的对数几率比等于：
 
 $$
-\log \left( \frac{\Pr(Y = k|X = x)}{\Pr(Y = k'|X = x)} \right) = (\beta_{k0} - \beta_{k'0}) + (\beta_{k1} - \beta_{k'1})x_1 + \cdots + (\beta_{kp} - \beta_{k'p})x_p. \quad (4.14)
+\log \left( \frac{\Pr(Y = k|X = x)}{\Pr(Y = k'|X = x)} \right) = (\beta_{k0} - \beta_{k'0}) + (\beta_{k1} - \beta_{k'1})x_1 + \cdots + (\beta_{kp} - \beta_{k'p})x_p. \tag{4.14}
 $$
 
 ## 4.4 Generative Models for Classification
@@ -288,7 +292,7 @@ $$
 假设我们希望将一个观测分类到 $K$ 个类别中的某一个类别，其中 $K \geq 2$。换句话说，定性响应变量 $Y$ 可以取 $K$ 个可能的不同且无序的值。令 $\pi_k$ 表示一个随机选取的观测来自第 $k$ 类的总体或先验概率。令 $f_k(X) \equiv \Pr(X|Y = k)$ 表示来自第 $k$ 类的观测的 $X$ 的密度函数。换句话说，如果观测来自第 $k$ 类且 $X \approx x$ 的概率较高，则 $f_k(x)$ 较大；如果观测来自第 $k$ 类且 $X \approx x$ 的概率很低，则 $f_k(x)$ 较小。那么，根据贝叶斯定理，
 
 $$
-\Pr(Y = k|X = x) = \frac{\pi_k f_k(x)}{\sum_{l=1}^K \pi_l f_l(x)}. \quad (4.15)
+\Pr(Y = k|X = x) = \frac{\pi_k f_k(x)}{\sum_{l=1}^K \pi_l f_l(x)}. \tag{4.15}
 $$
 
 根据我们之前的符号约定，我们将使用缩写 $p_k(x) = \Pr(Y = k|X = x)$；这表示观测 $X = x$ 属于第 $k$ 类的后验概率。也就是说，这表示在给定该观测的预测变量值的条件下，观测属于第 $k$ 类的概率。
@@ -307,7 +311,7 @@ $$
 具体来说，我们假设 $f_k(x)$ 是正态分布或高斯分布。在一维情况下，正态密度的形式为：
 
 $$
-f_k(x) = \frac{1}{\sqrt{2\pi \sigma_k}} \exp \left( - \frac{1}{2\sigma_k^2} (x - \mu_k)^2 \right) \quad (4.16)
+f_k(x) = \frac{1}{\sqrt{2\pi \sigma_k}} \exp \left( - \frac{1}{2\sigma_k^2} (x - \mu_k)^2 \right) \tag{4.16}
 $$
 
 其中，$\mu_k$ 和 $\sigma_k^2$ 分别是第 $k$ 类的均值和方差参数。
@@ -315,19 +319,19 @@ $$
 现在，假设 $\sigma_1^2 = \cdots = \sigma_K^2$，即所有 $K$ 个类别有一个共同的方差项，简化起见，我们用 $\sigma^2$ 来表示这个方差。将公式 (4.16) 代入公式 (4.15)，我们得到：
 
 $$
-p_k(x) = \frac{\frac{\pi_k}{\sqrt{2\pi \sigma}} \exp \left( - \frac{1}{2\sigma^2} (x - \mu_k)^2 \right)}  {\sum_{l=1}^K \frac{\pi_l}{\sqrt{2\pi \sigma}} \exp \left( - \frac{1}{2\sigma^2} (x - \mu_l)^2 \right)} \quad (4.17)
+p_k(x) = \frac{\frac{\pi_k}{\sqrt{2\pi \sigma}} \exp \left( - \frac{1}{2\sigma^2} (x - \mu_k)^2 \right)}  {\sum_{l=1}^K \frac{\pi_l}{\sqrt{2\pi \sigma}} \exp \left( - \frac{1}{2\sigma^2} (x - \mu_l)^2 \right)} \tag{4.17}
 $$
 
 （请注意，在公式 (4.17) 中，$\pi_k$ 表示观察值属于第 $k$ 类的先验概率，而不是数学常数 $\pi \approx 3.14159$。）Bayes分类器涉及将观察值 $X = x$ 分配给使得公式 (4.17) 最大的类别。对公式 (4.17) 取对数并重新排列项，不难证明这等价于将观察值分配给使得以下表达式最大的类别：
 
 $$
-\delta_k(x) = \frac{x \cdot \mu_k}{\sigma^2} - \frac{\mu_k^2}{2\sigma^2} + \log(\pi_k) \quad (4.18)
+\delta_k(x) = \frac{x \cdot \mu_k}{\sigma^2} - \frac{\mu_k^2}{2\sigma^2} + \log(\pi_k) \tag{4.18}
 $$
 
 例如，如果 $K = 2$ 且 $\pi_1 = \pi_2$，则当 $2x(\mu_1 - \mu_2) > \mu_1^2 - \mu_2^2$ 时，Bayes分类器将观察值分配给类别 1，否则分配给类别 2。Bayes决策边界是 $\delta_1(x) = \delta_2(x)$ 时的点；可以证明这相当于：
 
 $$
-x = \frac{\mu_1^2 - \mu_2^2}{2(\mu_1 - \mu_2)} = \frac{\mu_1 + \mu_2}{2} \quad (4.19)
+x = \frac{\mu_1^2 - \mu_2^2}{2(\mu_1 - \mu_2)} = \frac{\mu_1 + \mu_2}{2} \tag{4.19}
 $$  
 
 一个例子如图4.4左侧面板所示。显示的两个正态密度函数 $f_1(x)$ 和 $f_2(x)$ 代表两个不同的类别。两个密度函数的均值和方差参数分别为 $\mu_1 = -1.25 $，$\mu_2 = 1.25$，和 $\sigma_1^2 = \sigma_2^2 = 1$。这两个密度函数有重叠，因此，给定 $X = x$，我们对观察值所属的类别存在一些不确定性。如果我们假设观察值同样可能来自两个类别——即 $\pi_1 = \pi_2 = 0.5$，那么根据公式 (4.19)，我们可以看出，Bayes分类器会在 $x < 0$ 时将观察值分配给类别1，否则分配给类别2。注意，在这种情况下，我们能够计算Bayes分类器，因为我们知道 $X$ 来自每个类别的高斯分布，并且我们知道所有相关的参数。
@@ -342,7 +346,7 @@ $$
 $$
 
 $$
-\hat{\sigma^2} = \frac{1}{n - K} \sum_{k=1}^{K} \sum_{i : y_i = k} (x_i - \hat{\mu_k})^2 \quad (4.20)
+\hat{\sigma^2} = \frac{1}{n - K} \sum_{k=1}^{K} \sum_{i : y_i = k} (x_i - \hat{\mu_k})^2 \tag{4.20}
 $$
 
 其中，$n$ 是总训练样本数量，$n_k$ 是第 $k$ 类的训练样本数量。对于 $\mu_k$ 的估计，实际上是将第 $k$ 类的所有训练样本的均值求得，而 $\hat{\sigma^2}$ 可以视为每个类别的样本方差的加权平均。
@@ -350,13 +354,13 @@ $$
 有时我们知道类别成员概率 $\pi_1, \dots, \pi_K$，这些概率可以直接使用。如果没有额外信息，LDA通过训练样本中属于第 $k$ 类的比例来估计 $\pi_k$。换句话说：
 
 $$
-\hat{\pi_k} = \frac{n_k}{n} \quad (4.21)
+\hat{\pi_k} = \frac{n_k}{n} \tag{4.21}
 $$
 
 LDA分类器将(4.20)和(4.21)中给出的估计值代入(4.18)，并将观察值 $X = x$ 分配给使得以下公式最大化的类别：
 
 $$
-\hat{\delta}_k(x) = \frac{x \cdot \hat{\mu}_k}{\hat{\sigma}^2} - \frac{\hat{\mu}_k^2}{2\hat{\sigma}^2} + \log(\hat{\pi}_k) \quad (4.22)
+\hat{\delta}_k(x) = \frac{x \cdot \hat{\mu}_k}{\hat{\sigma}^2} - \frac{\hat{\mu}_k^2}{2\hat{\sigma}^2} + \log(\hat{\pi}_k) \tag{4.22}
 $$
 
 分类器名称中的“线性”一词源于该分类器的判别函数$\hat{\delta}_k(x)$是$x$的线性函数（与$x$的更复杂函数形式相对）。
@@ -376,13 +380,13 @@ $$
 多元高斯分布假设每个单独的预测变量都遵循一维正态分布，如公式（4.16）所示，并且各预测变量之间存在某种相关性。图4.5展示了 $p = 2$ 时的两个多元高斯分布示例。在每个特定点，表面高度表示 $X_1$ 和 $X_2$ 都落在该点周围小区域的概率。在任一面板中，如果沿着 $X_1$ 轴或 $X_2$ 轴切割表面，得到的横截面将呈现一维正态分布的形状。图4.5的左面板展示了一个例子，其中 $\text{Var}(X_1) = \text{Var}(X_2)$ 且 $\text{Cor}(X_1, X_2) = 0$; 这种表面具有典型的钟形状。然而，如果预测变量之间相关或具有不等方差，如图4.5右面板所示，钟形将被扭曲。在这种情况下，钟形的底部将呈椭圆形，而非圆形。为了表示一个 $p$ 维随机变量 $X$ 具有多元高斯分布，我们写作 $X \sim N(\mu, \Sigma)$。其中 $E(X) = \mu$ 是 $X$ 的均值（一个具有 $p$ 个分量的向量），而 $\text{Cov}(X) = \Sigma$ 是 $X$ 的 $p \times p$ 协方差矩阵。严格来说，多元高斯密度定义为：
 
 $$
-f(x) = \frac{1}{(2\pi)^{p/2}|\Sigma|^{1/2}} \exp \left( -\frac{1}{2} (x - \mu)^T \Sigma^{-1} (x - \mu) \right) \quad (4.23)
+f(x) = \frac{1}{(2\pi)^{p/2}|\Sigma|^{1/2}} \exp \left( -\frac{1}{2} (x - \mu)^T \Sigma^{-1} (x - \mu) \right) \tag{4.23}
 $$
 
 在 $p > 1$ 个预测变量的情况下，LDA 分类器假设第 $k$ 类的观察值来自一个多元高斯分布 $N(\mu_k, \Sigma)$，其中 $\mu_k$ 是类特定的均值向量，而 $\Sigma$ 是所有 $K$ 类共有的协方差矩阵。将第 $k$ 类的密度函数 $f_k(X = x)$ 代入公式 (4.15) 并进行一些代数运算，可以得出 Bayes 分类器将一个观察值 $X = x$ 分类到以下类：
 
 $$
-\delta_k(x) = x^T \Sigma^{-1} \mu_k - \frac{1}{2} \mu_k^T \Sigma^{-1} \mu_k + \log \pi_k \quad (4.24)
+\delta_k(x) = x^T \Sigma^{-1} \mu_k - \frac{1}{2} \mu_k^T \Sigma^{-1} \mu_k + \log \pi_k \tag{4.24}
 $$
 
 这是公式 (4.18) 的向量/矩阵版本。
@@ -393,7 +397,7 @@ $$
 图4.6 的左侧面板展示了一个示例。显示了三个大小相等的高斯类，每个类具有类特定的均值向量和共同的协方差矩阵。三个椭圆表示每个类包含 95% 概率的区域。虚线表示 Bayes 决策边界。换句话说，它们表示满足 $\delta_k(x) = \delta_l(x)$ 的值 $x$ 的集合；即
 
 $$
-x^T \Sigma^{-1} \mu_k - \frac{1}{2} \mu_k^T \Sigma^{-1} \mu_k = x^T \Sigma^{-1} \mu_l - \frac{1}{2} \mu_l^T \Sigma^{-1} \mu_l \quad (4.25)
+x^T \Sigma^{-1} \mu_k - \frac{1}{2} \mu_k^T \Sigma^{-1} \mu_k = x^T \Sigma^{-1} \mu_l - \frac{1}{2} \mu_l^T \Sigma^{-1} \mu_l \tag{4.25}
 $$
 
 对于 $k \neq l$。（公式 (4.24) 中的 $\log \pi_k$ 项消失了，因为每个类的训练样本数量相同；即 $\pi_k$ 对每个类都是相同的。）请注意，由于三个类之间有三对类，因此有三条线表示 Bayes 决策边界。即，一条边界将类 1 和类 2 分开，一条将类 1 和类 3 分开，另一条将类 2 和类 3 分开。这三条 Bayes 决策边界将预测变量空间划分为三个区域。Bayes 分类器将根据观察值所在的区域进行分类。
@@ -420,13 +424,13 @@ $$
 贝叶斯分类器通过将观测值分配到后验概率 $p_k(X)$ 最大的类别来工作。在二分类情况下，这相当于将观测值分配到违约类别，如果满足条件
 
 $$
-\Pr(\text{default} = \text{Yes} | X = x) > 0.5 \quad(4.26)
+\Pr(\text{default} = \text{Yes} | X = x) > 0.5 \tag{4.26}
 $$
 
 因此，贝叶斯分类器以及 LDA 使用 50% 的后验违约概率阈值来将观测值分配到违约类别。然而，如果我们关注错误地预测实际违约的个体的违约状态，那么可以考虑降低该阈值。例如，我们可以将任何后验违约概率高于 20% 的客户标记为违约类别。换句话说，不再是仅当满足条件(4.26)才将观测值分配到违约类别，而是当
 
 $$
-\Pr(\text{default} = \text{Yes} | X = x) > 0.2 \quad(4.27)
+\Pr(\text{default} = \text{Yes} | X = x) > 0.2 \tag{4.27}
 $$
 
 时也将其分配到违约类别。使用该方法所得到的错误率如表 4.5 所示。现在 LDA 预测 430 名个体将违约。在实际违约的 333 名个体中，LDA 正确预测了所有人，除了 138 人，准确率达到了 41.4%。这相比使用 50% 阈值时 75.7% 的错误率有了极大的改善。但这种改善是有代价的：现在有 235 名未违约的个体被错误分类。因此，总体错误率略微上升到了 3.73%。不过，信用卡公司可能会认为这点总体错误率的增加，是为更准确地识别确实违约的个体而付出的合理代价。
@@ -459,7 +463,7 @@ ROC 曲线是一种常用图形，用于同时显示在所有可能阈值下的�
 
 $$
 \delta_k(x) = -\frac{1}{2}(x - \mu_k)^T \Sigma_k^{-1} (x - \mu_k) - \frac{1}{2} \log |\Sigma_k| + \log \pi_k \\
-= -\frac{1}{2} x^T \Sigma_k^{-1} x + x^T \Sigma_k^{-1} \mu_k - \frac{1}{2} \mu_k^T \Sigma_k^{-1} \mu_k - \frac{1}{2} \log |\Sigma_k| + \log \pi_k \quad(4.28)
+= -\frac{1}{2} x^T \Sigma_k^{-1} x + x^T \Sigma_k^{-1} \mu_k - \frac{1}{2} \mu_k^T \Sigma_k^{-1} \mu_k - \frac{1}{2} \log |\Sigma_k| + \log \pi_k \tag{4.28}
 $$
 
 因此，QDA分类器的过程包括将 $\Sigma_k$、$\mu_k$ 和 $\pi_k$ 的估计值代入式 (4.28)，然后将观察值 $X = x$ 分配给使得该量最大的类别。与 (4.24) 中的公式不同，式 (4.28) 中的 $x$ 作为二次函数出现。这就是QDA得名的原因。
@@ -482,7 +486,7 @@ $$
 在第 $k$ 类中，$p$ 个预测变量是相互独立的。
 数学上，该假设意味着对于 $k = 1, \ldots, K$，
 $$
-f_k(x) = f_{k1}(x_1) \times f_{k2}(x_2) \times \cdots \times f_{kp}(x_p) \quad (4.29)
+f_k(x) = f_{k1}(x_1) \times f_{k2}(x_2) \times \cdots \times f_{kp}(x_p) \tag{4.29}
 $$
 其中 $f_{kj}$ 是第 $k$ 类中第 $j$ 个预测变量的密度函数。
 
@@ -492,7 +496,7 @@ $$
 
 在做出朴素贝叶斯假设后，我们可以将公式（4.29）代入公式（4.15），得到后验概率的表达式：
 $$
-\Pr(Y = k|X = x) = \frac{\pi_k \times f_{k1}(x_1) \times f_{k2}(x_2) \times \cdots \times f_{kp}(x_p)}{\sum_{l=1}^{K} \pi_l \times f_{l1}(x_1) \times f_{l2}(x_2) \times \cdots \times f_{lp}(x_p)} \quad (4.30)
+\Pr(Y = k|X = x) = \frac{\pi_k \times f_{k1}(x_1) \times f_{k2}(x_2) \times \cdots \times f_{kp}(x_p)}{\sum_{l=1}^{K} \pi_l \times f_{l1}(x_1) \times f_{l2}(x_2) \times \cdots \times f_{lp}(x_p)} \tag{4.30}
 $$
 其中 $k = 1, \ldots, K$。
 
@@ -556,7 +560,7 @@ $$
 通过类似的计算，在QDA的情况下，(4.31)变为：
 
 $$
-\log \left( \frac{\Pr(Y = k|X = x)}{\Pr(Y = K|X = x)} \right) = a_k + \sum_{j=1}^p b_{kj} x_j + \sum_{j=1}^p \sum_{l=1}^p c_{kjl} x_j x_l, \quad (4.33)
+\log \left( \frac{\Pr(Y = k|X = x)}{\Pr(Y = K|X = x)} \right) = a_k + \sum_{j=1}^p b_{kj} x_j + \sum_{j=1}^p \sum_{l=1}^p c_{kjl} x_j x_l, \tag{4.33}
 $$
 
 其中 $a_k$、$b_{kj}$ 和 $c_{kjl}$ 是 $\pi_k$、$\pi_K$、$\mu_k$、$\mu_K$、$\Sigma_k$ 和 $\Sigma_K$ 的函数。同样，如其名称所示，QDA假设后验概率的对数几率在 $x$ 上是二次的。
@@ -585,7 +589,7 @@ $$
 逻辑回归在这个故事中是如何相关的呢？回忆一下公式 $(4.12)$ 中，多项式逻辑回归的形式为：
 
 $$
-\log \left( \frac{P(Y = k|X = x)}{P(Y = K|X = x)} \right) = \beta_{k0} + \sum_{j=1}^p \beta_{kj} x_j
+\log \left( \frac{P(Y = k|X = x)}{P(Y = K|X = x)} \right) = \beta_{k0} + \sum_{j=1}^p \beta_{kj} x_j \tag{4.5}
 $$
 
 这与 LDA 的线性形式 $(4.32)$ 完全相同：在两种情况下，$\log \left( \frac{P(Y = k|X = x)}{P(Y = K|X = x)} \right)$ 都是预测变量的线性函数。在 LDA 中，这个线性函数中的系数是通过假设 $X_1, ..., X_p$ 在每个类中服从正态分布，从而得到对 $\pi_k, \pi_K, \mu_k, \mu_K, \Sigma$ 的估计。相比之下，在逻辑回归中，系数是通过最大化似然函数（公式 $(4.5)$）来选择的。因此，我们预计当正态性假设（大致上）成立时，LDA 会优于逻辑回归；而当该假设不成立时，我们预计逻辑回归会表现得更好。
